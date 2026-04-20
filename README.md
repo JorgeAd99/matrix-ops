@@ -1,36 +1,96 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+<div align="center">
+  <br />
+  <div style="background: linear-gradient(135deg, #c2884d 0%, #d4a96a 100%); width: 80px; height: 80px; border-radius: 20px; display: flex; align-items: center; justify-content: center; box-shadow: 0 8px 32px rgba(194,136,77,0.3); margin: 0 auto;">
+    <h1 style="color: white; margin: 0; font-family: monospace; font-size: 40px; line-height: 1;">M</h1>
+  </div>
+  <br />
+  
+  <h1>Matrix Ops v2.0</h1>
+  <p>
+    <strong>Una suite matemática completa, elegante y profesional.</strong>
+  </p>
 
-## Getting Started
+  <p>
+    <a href="https://nextjs.org/"><img src="https://img.shields.io/badge/Next.js-15-black?style=flat-square&logo=next.js" alt="Next.js" /></a>
+    <a href="https://reactjs.org/"><img src="https://img.shields.io/badge/React-19-blue?style=flat-square&logo=react" alt="React" /></a>
+    <a href="https://plotly.com/javascript/"><img src="https://img.shields.io/badge/Plotly-2D%2F3D-orange?style=flat-square&logo=plotly" alt="Plotly" /></a>
+    <a href="https://www.typescriptlang.org/"><img src="https://img.shields.io/badge/TypeScript-5.x-blue?style=flat-square&logo=typescript" alt="TypeScript" /></a>
+  </p>
+</div>
 
-First, run the development server:
+---
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## ✨ Novedades en la v2.0
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Matrix Ops ha evolucionado de ser una simple calculadora a una **plataforma educativa completa**, con un diseño fuertemente inspirado en la estética minimalista y cálida de Claude (tonos piedra y ámbar, tipografía DM Sans, y efectos de glassmorphism).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### 🧮 Calculadora Matricial Avanzada
+Realiza cálculos instantáneos de álgebra lineal con soporte completo para fracciones y decimales:
+- **Operaciones de una matriz:** Determinante, Inversa, Transpuesta, Traza, Rango, Forma Escalonada (RREF), Multiplicación por Escalar y Potencia.
+- **Operaciones de dos matrices:** Suma, Resta y Multiplicación de matrices $A \times B$.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### 📈 Graficadora 2D y 3D Integrada
+Un potente motor gráfico impulsado por `Plotly.js` y `mathjs` que te permite escribir ecuaciones dinámicas:
+- **Curvas 2D:** Visualiza funciones $f(x)$ con trazados de alta calidad sobre papel milimetrado.
+- **Superficies 3D:** Modela funciones multivariables $f(x, y)$ en un espacio tridimensional completamente rotable.
 
-## Learn More
+### 📚 Centro de Material Didáctico
+Aprende la teoría detrás de los cálculos. Esta nueva sección incluye un renderizador de **Markdown** con soporte para matemáticas (Remark/KaTeX), lo que permite subir apuntes y explicaciones directo desde la carpeta del proyecto.
 
-To learn more about Next.js, take a look at the following resources:
+---
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## 🛠️ Stack Tecnológico
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- **Framework:** Next.js (App Router) + React
+- **Estilos:** Vanilla CSS Avanzado (Variables CSS globales, Flexbox/Grid, Animaciones CSS)
+- **Matemáticas:** `mathjs` para parseo de ecuaciones y fracciones exactas.
+- **Gráficos:** `plotly.js-dist-min` embebido dinámicamente sin SSR para máxima compatibilidad.
+- **Iconografía:** `lucide-react`
 
-## Deploy on Vercel
+---
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## 🚀 Instalación y Uso Local
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Sigue estos pasos para correr el proyecto en tu máquina local:
+
+1. **Clonar el repositorio:**
+   ```bash
+   git clone https://github.com/JorgeAd99/matrix-ops.git
+   cd matrix-ops
+   ```
+
+2. **Instalar dependencias:**
+   ```bash
+   npm install
+   ```
+
+3. **Ejecutar el servidor de desarrollo:**
+   ```bash
+   npm run dev
+   ```
+
+4. Abre [http://localhost:3000](http://localhost:3000) en tu navegador para ver la aplicación.
+
+---
+
+## 📖 Cómo agregar Material Didáctico
+
+Agregar contenido educativo es extremadamente fácil.
+1. Crea un archivo `.md` (ej. `mi-clase.md`) dentro de la carpeta `/content/material/`.
+2. Añade la cabecera (Frontmatter) al inicio del archivo:
+   ```markdown
+   ---
+   title: "Introducción a los Determinantes"
+   date: "2026-04-20"
+   excerpt: "Una guía rápida sobre cómo calcular el determinante de una matriz 3x3."
+   ---
+   
+   Aquí va el contenido de tu clase...
+   ```
+3. ¡Listo! Aparecerá automáticamente en la sección de "Material Didáctico" en la app.
+
+---
+
+<div align="center">
+  Hecho con 🧡 para el aprendizaje del Álgebra Lineal.
+</div>
