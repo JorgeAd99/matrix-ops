@@ -1,67 +1,66 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&family=JetBrains+Mono:wght@400;500;600&display=swap');
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 :root {
-  /* backgrounds */
-  --bg:           #070709;
-  --bg-2:         #0e0e12;
-  --bg-3:         #16161d;
-  --bg-card:      rgba(255,255,255,0.028);
-  --bg-input:     #111118;
-  --bg-input-focus: #16161f;
+  /* ── backgrounds: warm stone, like Claude dark ── */
+  --bg:              #1c1917;
+  --bg-2:            #231f1c;
+  --bg-3:            #2c2724;
+  --bg-card:         rgba(255, 255, 255, 0.025);
+  --bg-input:        #221e1b;
+  --bg-input-focus:  #2a2420;
 
-  /* borders */
-  --border:       rgba(255,255,255,0.07);
-  --border-hi:    rgba(255,255,255,0.12);
-  --border-card:  rgba(255,255,255,0.06);
+  /* ── borders: warm subtle ── */
+  --border:          rgba(255, 255, 255, 0.07);
+  --border-hi:       rgba(255, 255, 255, 0.12);
+  --border-card:     rgba(255, 255, 255, 0.06);
 
-  /* accent: indigo */
-  --accent-b:       #6366f1;
-  --accent-b-light: #818cf8;
-  --accent-b-glow:  rgba(99,102,241,0.18);
-  --accent-b-bg:    rgba(99,102,241,0.10);
+  /* ── accent: warm amber/copper ── */
+  --accent-b:        #c2884d;
+  --accent-b-light:  #d4a96a;
+  --accent-b-glow:   rgba(194, 136, 77, 0.16);
+  --accent-b-bg:     rgba(194, 136, 77, 0.08);
 
-  /* status */
-  --green:        #34d399;
-  --green-glow:   rgba(52,211,153,0.10);
-  --red:          #f87171;
+  /* ── status ── */
+  --green:           #4ade80;
+  --green-glow:      rgba(74, 222, 128, 0.08);
+  --red:             #f87171;
 
-  /* text */
-  --text:         #7c7c8e;
-  --text-dim:     #4b4b5c;
-  --text-hi:      #e8e8f0;
-  --text-mid:     #a0a0b8;
+  /* ── text: warm stone ── */
+  --text:            #a8a29e;
+  --text-dim:        #57534e;
+  --text-hi:         #e7e5e4;
+  --text-mid:        #c4bdb8;
 
-  /* misc */
+  /* ── type ── */
   --mono:  'JetBrains Mono', monospace;
-  --sans:  'Inter', sans-serif;
-  --radius-card: 12px;
+  --sans:  'DM Sans', system-ui, sans-serif;
 }
 
-/* ── Reset ────────────────────────────────────────────────────────────── */
+/* ── Reset ─────────────────────────────────────────────────────── */
 * { box-sizing: border-box; margin: 0; padding: 0; }
 
 html, body {
   background: var(--bg);
   color: var(--text);
   font-family: var(--sans);
+  font-feature-settings: 'ss01', 'cv01';
   min-height: 100vh;
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* subtle radial glow at top */
+/* Very subtle warm glow — barely visible, just depth */
 body::before {
   content: '';
   position: fixed;
   inset: 0;
   pointer-events: none;
-  background:
-    radial-gradient(ellipse 80% 40% at 50% -10%, rgba(99,102,241,0.09) 0%, transparent 70%);
+  background: radial-gradient(ellipse 70% 30% at 50% -5%, rgba(194,136,77,0.04) 0%, transparent 65%);
   z-index: 0;
 }
 
@@ -69,31 +68,26 @@ body::before {
 
 ::-webkit-scrollbar { width: 4px; }
 ::-webkit-scrollbar-track { background: transparent; }
-::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 2px; }
-::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.18); }
+::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.09); border-radius: 2px; }
+::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.15); }
 
-/* ── Number inputs ────────────────────────────────────────────────────── */
+/* ── Number inputs ───────────────────────────────────────────────── */
 input[type="number"]::-webkit-inner-spin-button,
 input[type="number"]::-webkit-outer-spin-button { -webkit-appearance: none; }
 input[type="number"] { -moz-appearance: textfield; }
 
-/* ── Animations ───────────────────────────────────────────────────────── */
+/* ── Animations ───────────────────────────────────────────────────── */
 @keyframes fadeUp {
-  from { opacity: 0; transform: translateY(10px); }
+  from { opacity: 0; transform: translateY(8px); }
   to   { opacity: 1; transform: translateY(0); }
 }
-@keyframes scaleIn {
-  from { opacity: 0; transform: scale(0.97); }
-  to   { opacity: 1; transform: scale(1); }
-}
 
-.result-appear { animation: fadeUp 0.4s cubic-bezier(0.16,1,0.3,1) forwards; }
-.scale-in      { animation: scaleIn 0.3s cubic-bezier(0.16,1,0.3,1) forwards; }
+.result-appear { animation: fadeUp 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
 
-/* ── Utility ──────────────────────────────────────────────────────────── */
-button { transition: background 0.14s, border-color 0.14s, color 0.14s, opacity 0.14s; }
+/* ── Utility ───────────────────────────────────────────────────────── */
+button { transition: background 0.12s, border-color 0.12s, color 0.12s; }
 
-/* ── Matrix cells (shared styles) ────────────────────────────────────── */
+/* ── Matrix cells ───────────────────────────────────────────────────── */
 .m-cell, .m-cell-ro {
   width: 62px; height: 38px; border-radius: 5px;
   font-family: var(--mono); font-size: 12px; text-align: center;
@@ -117,7 +111,7 @@ button { transition: background 0.14s, border-color 0.14s, color 0.14s, opacity 
   color: var(--text-hi);
 }
 .m-cell-ro.highlight {
-  background: rgba(74,222,128,0.05);
-  border-color: rgba(74,222,128,0.18);
+  background: rgba(74, 222, 128, 0.04);
+  border-color: rgba(74, 222, 128, 0.15);
   color: var(--green);
 }

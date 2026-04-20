@@ -101,9 +101,9 @@ export default function Home() {
                 {/* logo mark */}
                 <div style={{
                   width: 28, height: 28, borderRadius: 7,
-                  background: 'linear-gradient(135deg, #6366f1 0%, #818cf8 100%)',
+                  background: 'linear-gradient(135deg, #c2884d 0%, #d4a96a 100%)',
                   display: 'flex', alignItems: 'center', justifyContent: 'center',
-                  boxShadow: '0 0 16px rgba(99,102,241,0.4)',
+                  boxShadow: '0 0 14px rgba(194,136,77,0.3)',
                 }}>
                   <span style={{ fontFamily: 'var(--mono)', fontSize: 12, fontWeight: 600, color: '#fff' }}>M</span>
                 </div>
@@ -125,7 +125,7 @@ export default function Home() {
             <div style={{
               padding: '7px 14px', borderRadius: 8,
               background: 'var(--accent-b-bg)',
-              border: '1px solid rgba(99,102,241,0.2)',
+              border: '1px solid rgba(194,136,77,0.2)',
               fontFamily: 'var(--mono)', fontSize: 12,
               color: 'var(--accent-b-light)',
               backdropFilter: 'blur(8px)',
@@ -169,8 +169,8 @@ export default function Home() {
                         style={{
                           display: 'flex', alignItems: 'center', gap: 9,
                           width: '100%', padding: '8px 10px', borderRadius: 7,
-                          background: active ? 'rgba(99,102,241,0.12)' : 'transparent',
-                          border: active ? '1px solid rgba(99,102,241,0.22)' : '1px solid transparent',
+                          background: active ? 'rgba(194,136,77,0.10)' : 'transparent',
+                          border: active ? '1px solid rgba(194,136,77,0.20)' : '1px solid transparent',
                           cursor: 'pointer', textAlign: 'left',
                           borderLeft: active ? '2px solid var(--accent-b)' : '2px solid transparent',
                         }}
@@ -211,7 +211,7 @@ export default function Home() {
               <div style={{
                 width: 36, height: 36, borderRadius: 9,
                 background: 'var(--accent-b-bg)',
-                border: '1px solid rgba(99,102,241,0.2)',
+                border: '1px solid rgba(194,136,77,0.2)',
                 display: 'flex', alignItems: 'center', justifyContent: 'center',
                 fontFamily: 'var(--mono)', fontSize: 12, fontWeight: 600,
                 color: 'var(--accent-b-light)',
@@ -232,8 +232,8 @@ export default function Home() {
             {/* Matrix A */}
             <MatrixCard
               label="A" rows={rowsA} cols={colsA}
-              onRowsChange={r => resizeA(r, colsA)}
-              onColsChange={c => resizeA(rowsA, c)}
+              onRowsChange={r => currentOp.squareOnly ? resizeA(r, r) : resizeA(r, colsA)}
+              onColsChange={c => currentOp.squareOnly ? resizeA(c, c) : resizeA(rowsA, c)}
               squareOnly={currentOp.squareOnly}
               accentColor="var(--accent-b)"
             >
@@ -288,12 +288,13 @@ export default function Home() {
               onClick={compute}
               style={{
                 width: '100%', padding: '13px 20px',
-                background: 'linear-gradient(135deg, #6366f1 0%, #7c3aed 100%)',
-                border: 'none', borderRadius: 10,
+                background: '#c2884d',
+                border: '1px solid rgba(255,255,255,0.08)',
+                borderRadius: 10,
                 color: '#fff',
                 fontFamily: 'var(--sans)', fontWeight: 600, fontSize: 13,
                 letterSpacing: '0.01em', cursor: 'pointer',
-                boxShadow: '0 4px 20px rgba(99,102,241,0.28), 0 1px 0 rgba(255,255,255,0.08) inset',
+                boxShadow: '0 1px 0 rgba(255,255,255,0.1) inset, 0 4px 16px rgba(194,136,77,0.22)',
               }}
             >
               Calcular {currentOp.symbol}
@@ -365,7 +366,7 @@ export default function Home() {
             fontFamily: 'var(--mono)',
             fontSize: 12,
             fontWeight: 600,
-            background: 'linear-gradient(90deg, var(--accent-b) 0%, #a78bfa 100%)',
+            background: 'linear-gradient(90deg, var(--accent-b) 0%, var(--accent-b-light) 100%)',
             WebkitBackgroundClip: 'text',
             WebkitTextFillColor: 'transparent',
             letterSpacing: '0.02em',
@@ -403,8 +404,8 @@ function MatrixCard({
         <div style={{ display: 'flex', alignItems: 'center', gap: 9 }}>
           <div style={{
             width: 26, height: 26, borderRadius: 6,
-            background: isAccentB ? 'var(--accent-b-bg)' : 'rgba(148,163,184,0.06)',
-            border: `1px solid ${isAccentB ? 'rgba(99,102,241,0.3)' : 'rgba(148,163,184,0.15)'}`,
+            background: isAccentB ? 'var(--accent-b-bg)' : 'rgba(168,162,158,0.06)',
+            border: `1px solid ${isAccentB ? 'rgba(194,136,77,0.28)' : 'rgba(168,162,158,0.15)'}`,
             display: 'flex', alignItems: 'center', justifyContent: 'center',
             fontFamily: 'var(--mono)', fontSize: 12, fontWeight: 700,
             color: accentColor,
