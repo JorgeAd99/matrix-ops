@@ -1,4 +1,4 @@
-import type { Metadata } from 'next';
+import type { Metadata, Viewport } from 'next';
 import './globals.css';
 import GlobalNav from '@/components/GlobalNav';
 import ChangelogBanner from '@/components/ChangelogBanner';
@@ -6,6 +6,12 @@ import ChangelogBanner from '@/components/ChangelogBanner';
 export const metadata: Metadata = {
   title: 'Matrix Ops — Calculadora Matricial',
   description: 'Operaciones matriciales: inversas, determinantes, transpuestas, multiplicación y más.',
+};
+
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  maximumScale: 1,
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

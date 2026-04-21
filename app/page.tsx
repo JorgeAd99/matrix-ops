@@ -91,10 +91,10 @@ export default function Home() {
 
   return (
     <div style={{ minHeight: '100vh', position: 'relative', zIndex: 1 }}>
-      <div style={{ maxWidth: 1080, margin: '0 auto', padding: '0 24px 80px' }}>
+      <div style={{ maxWidth: 1080, margin: '0 auto', padding: '0 16px 80px' }}>
 
         {/* ── Header ── */}
-        <header style={{ padding: '40px 0 32px', marginBottom: 36 }}>
+        <header style={{ padding: 'clamp(20px,4vw,40px) 0 clamp(16px,3vw,32px)', marginBottom: 36 }}>
           <div style={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', gap: 16, flexWrap: 'wrap' }}>
             <div>
               <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 8 }}>
@@ -138,10 +138,10 @@ export default function Home() {
           </div>
         </header>
 
-        <div style={{ display: 'flex', gap: 28, alignItems: 'flex-start' }}>
+        <div className="main-flex" style={{ display: 'flex', gap: 28, alignItems: 'flex-start' }}>
 
           {/* ── Sidebar ── */}
-          <aside style={{
+          <aside className="ops-sidebar" style={{
             width: 185, flexShrink: 0,
             background: 'var(--bg-card)',
             border: '1px solid var(--border-card)',
@@ -151,6 +151,7 @@ export default function Home() {
             position: 'sticky', top: 24,
           }}>
             {OP_GROUPS.map((group, gi) => (
+              // eslint-disable-next-line react/jsx-no-comment-textnodes
               <div key={group.title} style={{ marginTop: gi === 0 ? 0 : 16 }}>
                 <p style={{
                   fontSize: 9.5, color: 'var(--text-dim)',

@@ -115,3 +115,46 @@ button { transition: background 0.12s, border-color 0.12s, color 0.12s; }
   border-color: rgba(74, 222, 128, 0.15);
   color: var(--green);
 }
+
+/* ── Responsive ──────────────────────────────────────────────────────── */
+
+/* Tablet & below: operations sidebar goes horizontal (scrollable) */
+@media (max-width: 860px) {
+  .ops-sidebar {
+    width: 100% !important;
+    position: static !important;
+    display: flex !important;
+    flex-direction: row !important;
+    overflow-x: auto !important;
+    padding: 10px 12px !important;
+    gap: 8px !important;
+    border-radius: 10px !important;
+  }
+  .ops-sidebar-group {
+    display: contents;
+  }
+  .ops-sidebar button {
+    flex-shrink: 0;
+    white-space: nowrap;
+  }
+  .main-flex {
+    flex-direction: column !important;
+  }
+}
+
+/* Mobile: adjust matrix cells to be smaller */
+@media (max-width: 640px) {
+  .m-cell, .m-cell-ro {
+    width: 52px !important;
+    height: 34px !important;
+    font-size: 11px !important;
+  }
+  /* Add padding at bottom for the fixed mobile nav bar */
+  body {
+    padding-bottom: 70px;
+  }
+  /* Remove horizontal sidebar from body flex — mobile nav is at bottom */
+  body > nav.global-nav-desktop {
+    display: none !important;
+  }
+}
