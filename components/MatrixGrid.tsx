@@ -1,6 +1,6 @@
 'use client';
 import { useState, useEffect, useRef, useCallback } from 'react';
-import { Matrix, formatNumber } from '@/lib/matrixOps';
+import { Matrix, formatNumber, toFraction } from '@/lib/matrixOps';
 
 interface Props {
   matrix: Matrix;
@@ -8,6 +8,7 @@ interface Props {
   readOnly?: boolean;
   label?: string;
   highlight?: boolean;
+  useFraction?: boolean;
 }
 
 // ── Inner cell ───────────────────────────────────────────────────────────────
@@ -71,7 +72,7 @@ function MatrixCell({
 }
 
 // ── Main grid ────────────────────────────────────────────────────────────────
-export default function MatrixGrid({ matrix, onChange, readOnly, label, highlight }: Props) {
+export default function MatrixGrid({ matrix, onChange, readOnly, label, highlight, useFraction }: Props) {
   const gridRef = useRef<HTMLDivElement>(null);
   const rows = matrix.length;
   const cols = matrix[0]?.length ?? 0;
@@ -127,7 +128,7 @@ export default function MatrixGrid({ matrix, onChange, readOnly, label, highligh
                     key={`${i}-${j}`}
                     className={`m-cell-ro${highlight ? ' highlight' : ''}`}
                   >
-                    {formatNumber(val)}
+                    {useFraction ? toFraction(val) : formatNumber(val)}
                   </div>
                 ) : (
                   <MatrixCell

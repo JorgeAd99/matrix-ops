@@ -5,7 +5,7 @@ import SizeSelector from '@/components/SizeSelector';
 import {
   Matrix, createMatrix,
   transpose, determinant, inverse, multiply,
-  add, subtract, scalarMultiply, power, rank, trace, rowEchelon, formatNumber
+  add, subtract, scalarMultiply, power, rank, trace, rowEchelon, formatNumber, toFraction
 } from '@/lib/matrixOps';
 
 type Op = 'transpose' | 'determinant' | 'inverse' | 'multiply' | 'add' | 'subtract' | 'scalar' | 'power' | 'rank' | 'trace' | 'rref';
@@ -42,6 +42,7 @@ export default function Home() {
   const [result, setResult] = useState<Matrix | number | null>(null);
   const [error,  setError]  = useState<string | null>(null);
   const [rKey,   setRKey]   = useState(0);
+  const [useFraction, setUseFraction] = useState(false);
 
   const currentOp = OPERATIONS.find(o => o.id === selectedOp)!;
 
@@ -323,12 +324,58 @@ export default function Home() {
                 borderRadius: 12,
                 padding: '20px 24px',
               }}>
-                <div style={{ display: 'flex', alignItems: 'center', gap: 7, marginBottom: 18 }}>
-                  <div style={{ width: 5, height: 5, borderRadius: '50%', background: 'var(--green)', boxShadow: '0 0 8px var(--green)' }} />
-                  <span style={{ fontSize: 10, color: 'var(--green)', letterSpacing: '0.16em', textTransform: 'uppercase', fontWeight: 600 }}>
-                    Resultado — {currentOp.symbol}
-                  </span>
+                {/* Header row: label + fraction toggle */}
+                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 18, flexWrap: 'wrap', gap: 10 }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: 7 }}>
+                    <div style={{ width: 5, height: 5, borderRadius: '50%', background: 'var(--green)', boxShadow: '0 0 8px var(--green)' }} />
+                    <span style={{ fontSize: 10, color: 'var(--green)', letterSpacing: '0.16em', textTransform: 'uppercase', fontWeight: 600 }}>
+                      Resultado — {currentOp.symbol}
+                    </span>
+                  </div>
+
+                  {/* Decimal / Fracción toggle */}
+                  <button
+                    id="fraction-toggle"
+                    onClick={() => setUseFraction(f => !f)}
+                    title={useFraction ? 'Cambiar a decimales' : 'Cambiar a fracciones'}
+                    style={{
+                      display: 'flex', alignItems: 'center', gap: 7,
+                      background: useFraction ? 'rgba(52,211,153,0.12)' : 'rgba(99,102,241,0.08)',
+                      border: `1px solid ${useFraction ? 'rgba(52,211,153,0.30)' : 'rgba(99,102,241,0.20)'}`,
+                      borderRadius: 20,
+                      padding: '5px 12px 5px 8px',
+                      cursor: 'pointer',
+                      transition: 'all 0.2s ease',
+                    }}
+                  >
+                    {/* pill thumb */}
+                    <span style={{
+                      display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
+                      width: 28, height: 15, borderRadius: 8,
+                      background: useFraction ? 'rgba(52,211,153,0.25)' : 'rgba(148,163,184,0.15)',
+                      transition: 'background 0.2s ease',
+                      position: 'relative',
+                    }}>
+                      <span style={{
+                        position: 'absolute',
+                        width: 11, height: 11, borderRadius: '50%',
+                        background: useFraction ? 'var(--green)' : 'rgba(148,163,184,0.6)',
+                        left: useFraction ? 'calc(100% - 13px)' : '2px',
+                        transition: 'left 0.2s ease, background 0.2s ease',
+                        boxShadow: useFraction ? '0 0 6px rgba(52,211,153,0.6)' : 'none',
+                      }} />
+                    </span>
+                    <span style={{
+                      fontSize: 11, fontWeight: 600, fontFamily: 'var(--mono)',
+                      color: useFraction ? 'var(--green)' : 'var(--text-dim)',
+                      transition: 'color 0.2s ease',
+                      letterSpacing: '0.04em',
+                    }}>
+                      {useFraction ? '¹⁄ₙ fracciones' : '.0 decimales'}
+                    </span>
+                  </button>
                 </div>
+
                 {isNum && (
                   <div style={{
                     fontFamily: 'var(--mono)', fontSize: 52, fontWeight: 700,
@@ -336,12 +383,12 @@ export default function Home() {
                     padding: '10px 0',
                     textShadow: '0 0 40px rgba(52,211,153,0.4)',
                   }}>
-                    {formatNumber(result as number)}
+                    {useFraction ? toFraction(result as number) : formatNumber(result as number)}
                   </div>
                 )}
                 {isMat && (
                   <div style={{ display: 'flex', justifyContent: 'center' }}>
-                    <MatrixGrid matrix={result as Matrix} readOnly highlight />
+                    <MatrixGrid matrix={result as Matrix} readOnly highlight useFraction={useFraction} />
                   </div>
                 )}
               </div>

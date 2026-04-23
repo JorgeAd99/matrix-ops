@@ -150,3 +150,38 @@ export function formatNumber(v: number): string {
   const s = v.toFixed(4);
   return parseFloat(s).toString();
 }
+
+/**
+ * Converts a floating-point number to a simplified fraction string.
+ * Integers are returned as-is (e.g. 2 → "2").
+ * Uses the continued-fraction algorithm with tolerance 1e-9.
+ */
+export function toFraction(v: number, maxDen = 10_000): string {
+  if (!isFinite(v)) return String(v);
+  const sign = v < 0 ? '-' : '';
+  v = Math.abs(v);
+  const whole = Math.floor(v);
+  const frac = v - whole;
+
+  if (frac < 1e-9) return `${sign}${whole}`;
+
+  // Stern-Brocot / continued-fraction search
+  let h1 = 1, h2 = 0, k1 = 0, k2 = 1;
+  let b = frac;
+  do {
+    const a = Math.floor(b);
+    let aux = h1;
+    h1 = a * h1 + h2;
+    h2 = aux;
+    aux = k1;
+    k1 = a * k1 + k2;
+    k2 = aux;
+    b = 1 / (b - a);
+  } while (Math.abs(frac - h1 / k1) > frac * 1e-9 && k1 <= maxDen);
+
+  const num = whole * k1 + h1;
+  const den = k1;
+
+  if (den === 1) return `${sign}${num}`;
+  return `${sign}${num}/${den}`;
+}
