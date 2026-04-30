@@ -20,6 +20,9 @@ export default function PWAInstallBanner() {
     // Si ya fue descartado permanentemente, no mostramos nada
     if (localStorage.getItem(STORAGE_KEY)) return;
 
+    // Evitamos mostrarlo si ya estamos en la PWA (standalone)
+    if (window.matchMedia && window.matchMedia('(display-mode: standalone)').matches) return;
+
     const handleBeforeInstallPrompt = (e: Event) => {
       e.preventDefault(); // Evitar que el navegador muestre su propio prompt
       setDeferredPrompt(e as BeforeInstallPromptEvent);
@@ -28,24 +31,39 @@ export default function PWAInstallBanner() {
       return () => clearTimeout(timer);
     };
 
+    const handleAppInstalled = () => {
+      setIsVisible(false);
+      localStorage.setItem(STORAGE_KEY, 'true');
+    };
+
     window.addEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
+    window.addEventListener('appinstalled', handleAppInstalled);
 
     return () => {
       window.removeEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
+      window.removeEventListener('appinstalled', handleAppInstalled);
     };
   }, []);
 
   const handleInstall = async () => {
     if (!deferredPrompt) return;
-    setIsInstalling(true);
-    await deferredPrompt.prompt();
-    const { outcome } = await deferredPrompt.userChoice;
-    if (outcome === 'accepted') {
-      localStorage.setItem(STORAGE_KEY, 'true');
-    }
-    setIsInstalling(false);
+    
+    // Ocultar nuestro banner personalizado inmediatamente
     setIsVisible(false);
-    setDeferredPrompt(null);
+    setIsInstalling(true);
+
+    try {
+      await deferredPrompt.prompt();
+      const { outcome } = await deferredPrompt.userChoice;
+      if (outcome === 'accepted') {
+        localStorage.setItem(STORAGE_KEY, 'true');
+      }
+    } catch (err) {
+      console.error("Error al instalar PWA:", err);
+    } finally {
+      setIsInstalling(false);
+      setDeferredPrompt(null);
+    }
   };
 
   const handleDismiss = () => {
@@ -58,9 +76,11 @@ export default function PWAInstallBanner() {
       {/* Banner de instalación */}
       <div style={{
         position: 'fixed',
-        bottom: isVisible ? 24 : -120,
+        bottom: 24,
         left: '50%',
-        transform: 'translateX(-50%)',
+        transform: `translate(-50%, ${isVisible ? '0px' : '150%'})`,
+        opacity: isVisible ? 1 : 0,
+        pointerEvents: isVisible ? 'auto' : 'none',
         zIndex: 50,
         width: 'calc(100% - 48px)',
         maxWidth: 480,
@@ -72,7 +92,7 @@ export default function PWAInstallBanner() {
         alignItems: 'center',
         gap: 16,
         boxShadow: '0 8px 40px rgba(0,0,0,0.35), 0 2px 8px rgba(0,0,0,0.2)',
-        transition: 'bottom 0.5s cubic-bezier(0.16, 1, 0.3, 1)',
+        transition: 'transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.5s ease',
         backdropFilter: 'blur(16px)',
       }}>
         {/* Ícono */}
