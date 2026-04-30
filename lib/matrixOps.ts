@@ -146,9 +146,11 @@ function round(v: number, decimals = 6): number {
 }
 
 export function formatNumber(v: number): string {
-  if (Number.isInteger(v)) return String(v);
-  const s = v.toFixed(4);
-  return parseFloat(s).toString();
+  // Snap floating-point noise (e.g. 1.9999999998 → 2)
+  const snapped = parseFloat(v.toFixed(8));
+  if (Number.isInteger(snapped)) return String(snapped);
+  // Show at most 3 decimal places, no trailing zeros
+  return parseFloat(snapped.toFixed(3)).toString();
 }
 
 /**

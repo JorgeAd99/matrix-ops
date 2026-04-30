@@ -4,7 +4,9 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
+/* ── Design tokens — Dark theme (default) ── */
+:root,
+[data-theme="dark"] {
   /* ── backgrounds: warm stone, like Claude dark ── */
   --bg:              #1c1917;
   --bg-2:            #231f1c;
@@ -40,6 +42,48 @@
   --sans:  'DM Sans', system-ui, sans-serif;
 }
 
+/* ── Design tokens — Light theme ── */
+[data-theme="light"] {
+  /* ── backgrounds: blanco cálido con tinte amarillo suave ── */
+  --bg:              #fdfdf5;
+  --bg-2:            #f9f8ec;
+  --bg-3:            #f3f1df;
+  --bg-card:         rgba(180, 160, 20, 0.03);
+  --bg-input:        #fefefа;
+  --bg-input-focus:  #f9f8ec;
+
+  /* ── borders: levemente dorados ── */
+  --border:          rgba(120, 100, 10, 0.10);
+  --border-hi:       rgba(120, 100, 10, 0.18);
+  --border-card:     rgba(120, 100, 10, 0.07);
+
+  /* ── accent: ámbar profundo ── */
+  --accent-b:        #b45309;
+  --accent-b-light:  #d97706;
+  --accent-b-glow:   rgba(180, 83, 9, 0.16);
+  --accent-b-bg:     rgba(180, 83, 9, 0.07);
+
+  /* ── status ── */
+  --green:           #15803d;
+  --green-glow:      rgba(21, 128, 61, 0.08);
+  --red:             #b91c1c;
+
+  /* ── text: oscuro cálido ── */
+  --text:            #44403c;
+  --text-dim:        #a8a094;
+  --text-hi:         #1c1917;
+  --text-mid:        #57534e;
+
+  /* ── type (same) ── */
+  --mono:  'JetBrains Mono', monospace;
+  --sans:  'DM Sans', system-ui, sans-serif;
+}
+
+/* ── Smooth theme transition ─────────────────────────────────────── */
+html {
+  transition: background 0.25s ease, color 0.25s ease;
+}
+
 /* ── Reset ─────────────────────────────────────────────────────── */
 * { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -62,6 +106,11 @@ body::before {
   pointer-events: none;
   background: radial-gradient(ellipse 70% 30% at 50% -5%, rgba(194,136,77,0.04) 0%, transparent 65%);
   z-index: 0;
+  transition: opacity 0.25s ease;
+}
+
+[data-theme="light"] body::before {
+  background: radial-gradient(ellipse 70% 30% at 50% -5%, rgba(180,160,20,0.05) 0%, transparent 65%);
 }
 
 ::selection { background: var(--accent-b); color: #fff; }

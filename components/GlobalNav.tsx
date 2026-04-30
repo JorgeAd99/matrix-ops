@@ -2,10 +2,12 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Calculator, BookOpen, Activity, Bug } from 'lucide-react';
+import { Calculator, BookOpen, Activity, Bug, Sigma, Sun, Moon } from 'lucide-react';
+import { useTheme } from './ThemeProvider';
 
 export default function GlobalNav() {
   const pathname = usePathname();
+  const { theme, toggleTheme } = useTheme();
 
   return (
     <>
@@ -34,9 +36,16 @@ export default function GlobalNav() {
         </div>
 
         <NavItem href="/" icon={<Calculator size={22} />} label="Calculadora" active={pathname === '/'} />
+        <NavItem href="/ecuaciones" icon={<Sigma size={22} />} label="Ecuaciones Lineales" active={pathname.startsWith('/ecuaciones')} />
         <NavItem href="/material" icon={<BookOpen size={22} />} label="Material Didáctico" active={pathname.startsWith('/material')} />
         <NavItem href="/graficadora" icon={<Activity size={22} />} label="Graficadora" active={pathname.startsWith('/graficadora')} />
         <NavItem href="/reportar" icon={<Bug size={22} />} label="Reportar Error" active={pathname.startsWith('/reportar')} />
+
+        {/* Spacer empuja el toggle al fondo */}
+        <div style={{ flex: 1 }} />
+
+        {/* ── Theme toggle (desktop) ── */}
+        <ThemeToggleDesktop theme={theme} onToggle={toggleTheme} />
       </nav>
 
       {/* ── Mobile: horizontal bottom bar ── */}
@@ -53,9 +62,13 @@ export default function GlobalNav() {
         backdropFilter: 'blur(16px)',
       }}>
         <NavItemMobile href="/" icon={<Calculator size={20} />} label="Calc" active={pathname === '/'} />
+        <NavItemMobile href="/ecuaciones" icon={<Sigma size={20} />} label="Ecuac." active={pathname.startsWith('/ecuaciones')} />
         <NavItemMobile href="/material" icon={<BookOpen size={20} />} label="Material" active={pathname.startsWith('/material')} />
         <NavItemMobile href="/graficadora" icon={<Activity size={20} />} label="Graficar" active={pathname.startsWith('/graficadora')} />
         <NavItemMobile href="/reportar" icon={<Bug size={20} />} label="Error" active={pathname.startsWith('/reportar')} />
+
+        {/* ── Theme toggle (mobile) ── */}
+        <ThemeToggleMobile theme={theme} onToggle={toggleTheme} />
       </nav>
 
       <style dangerouslySetInnerHTML={{ __html: `
@@ -101,3 +114,59 @@ function NavItemMobile({ href, icon, label, active }: { href: string; icon: Reac
     </Link>
   );
 }
+
+function ThemeToggleDesktop({ theme, onToggle }: { theme: 'dark' | 'light'; onToggle: () => void }) {
+  return (
+    <button
+      onClick={onToggle}
+      title={theme === 'dark' ? 'Cambiar a modo claro' : 'Cambiar a modo oscuro'}
+      style={{
+        width: 44, height: 44,
+        display: 'flex', alignItems: 'center', justifyContent: 'center',
+        borderRadius: 10,
+        background: 'transparent',
+        border: '1px solid var(--border)',
+        color: 'var(--text)',
+        cursor: 'pointer',
+        transition: 'all 0.15s ease',
+        marginBottom: 8,
+      }}
+      onMouseEnter={e => {
+        (e.currentTarget as HTMLButtonElement).style.background = 'var(--accent-b-bg)';
+        (e.currentTarget as HTMLButtonElement).style.color = 'var(--accent-b-light)';
+        (e.currentTarget as HTMLButtonElement).style.borderColor = 'rgba(194,136,77,0.25)';
+      }}
+      onMouseLeave={e => {
+        (e.currentTarget as HTMLButtonElement).style.background = 'transparent';
+        (e.currentTarget as HTMLButtonElement).style.color = 'var(--text)';
+        (e.currentTarget as HTMLButtonElement).style.borderColor = 'var(--border)';
+      }}
+    >
+      {theme === 'dark' ? <Sun size={20} /> : <Moon size={20} />}
+    </button>
+  );
+}
+
+function ThemeToggleMobile({ theme, onToggle }: { theme: 'dark' | 'light'; onToggle: () => void }) {
+  return (
+    <button
+      onClick={onToggle}
+      title={theme === 'dark' ? 'Modo claro' : 'Modo oscuro'}
+      style={{
+        display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 3,
+        padding: '6px 12px',
+        borderRadius: 10,
+        background: 'transparent',
+        border: 'none',
+        color: 'var(--text-dim)',
+        cursor: 'pointer',
+        transition: 'color 0.15s ease',
+        fontFamily: 'var(--sans)',
+      }}
+    >
+      {theme === 'dark' ? <Sun size={20} /> : <Moon size={20} />}
+      <span style={{ fontSize: 10 }}>{theme === 'dark' ? 'Claro' : 'Oscuro'}</span>
+    </button>
+  );
+}
+
