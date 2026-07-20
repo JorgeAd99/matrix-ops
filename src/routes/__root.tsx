@@ -18,7 +18,9 @@ export const Route = createRootRoute({
       <Footer />
       <ChangelogBanner />
       <PWAInstallBanner />
+      {/*
       <WelcomeModal />
+      */}
       {process.env.NODE_ENV === 'development' && (
         <React.Suspense fallback={null}>
           <TanStackRouterDevtools position="bottom-right" />
