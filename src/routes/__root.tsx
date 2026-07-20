@@ -5,6 +5,7 @@ import ThemeProvider from '@/components/ThemeProvider';
 import PWAInstallBanner from '@/components/PWAInstallBanner';
 import Footer from '@/components/Footer';
 import ChangelogBanner from '@/components/ChangelogBanner';
+import WelcomeModal from '@/components/WelcomeModal';
 import React from 'react';
 
 export const Route = createRootRoute({
@@ -17,6 +18,7 @@ export const Route = createRootRoute({
       <Footer />
       <ChangelogBanner />
       <PWAInstallBanner />
+      <WelcomeModal />
       {process.env.NODE_ENV === 'development' && (
         <React.Suspense fallback={null}>
           <TanStackRouterDevtools position="bottom-right" />
